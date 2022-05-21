@@ -15,13 +15,16 @@ export const cardFactory = (model: CreateCardModel) => {
   card.pasteId = model.pasteId;
   card.pasteEditCode = model.pasteEditCode;
   card.createDate = new Date();
+  card.learnDate = new Date();
+  card.interval = 0;
+  card.stage = 0;
   return card;
 };
 
 export class CardService {
   constructor(readonly repository: Repository<CardEntity>) {}
 
-  async createNoteAsync(model: CreateCardModel): Promise<CardEntity> {
+  async createCardAsync(model: CreateCardModel): Promise<CardEntity> {
     const card = cardFactory(model);
     await this.repository.save(card);
     return card;

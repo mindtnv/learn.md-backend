@@ -2,7 +2,8 @@
   "compilerOptions": {
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
-    "lib": ["ES6"]
+    "lib": ["ES6"],
+    "esModuleInterop": true
   },
   "files": ["./src/index.ts"]
 }
