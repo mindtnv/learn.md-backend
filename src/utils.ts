@@ -7,3 +7,6 @@ export const clearTime = (date: Date) => {
   result.setHours(0, 0, 0, 0);
   return result;
 };
+
+export const getRandomNumber = (min: number, max: number) =>
+  min + ~~(Math.random() * (max - min));
