@@ -2,6 +2,7 @@
 import { appDataSourceFactory } from "./AppDataSource";
 import { CardEntity } from "./CardEntity";
 import { CardService, CreateCardModel } from "./CardService";
+import { clearTime } from "./utils";
 
 describe("CreateCard tests", () => {
   let AppDataSource: DataSource;
@@ -32,5 +33,18 @@ describe("CreateCard tests", () => {
     const secondCard = await cardService.createCardAsync(testCreateCardModel);
     expect(firstCard.id).toBe(1);
     expect(secondCard.id).toBe(2);
+  });
+  test("Dont accept empty fields", async () => {
+    await expect(async () => {
+      await cardService.createCardAsync({
+        pasteId: "",
+        deck: "",
+        pasteEditCode: "",
+      });
+    }).rejects.toThrow();
+  });
+  test("Creating and Learning dates are equal", async () => {
+    const card = await cardService.createCardAsync(testCreateCardModel);
+    expect(card.learnDate).toStrictEqual(clearTime(card.createDate));
   });
 });
