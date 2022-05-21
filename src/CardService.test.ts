@@ -164,3 +164,66 @@ describe("DeleteCard Tests", () => {
     expect(await cardService.repository.count()).toBe(0);
   });
 });
+
+describe("GetActiveCards Tests", () => {
+  test("All cards are active", async () => {
+    for (let i = 0; i < 3; i++) {
+      await cardService.createCardAsync(testCreateCardModel);
+    }
+    expect((await cardService.getActiveCardsAsync()).length).toBe(3);
+  });
+  test("Zero cards are active", async () => {
+    for (let i = 0; i < 5; i++) {
+      const card = await cardService.createCardAsync(testCreateCardModel);
+      await cardService.learnCardAsync({
+        id: card.id,
+        difficult: "easy",
+      });
+    }
+    expect((await cardService.getActiveCardsAsync()).length).toBe(0);
+  });
+  test("Zero cards in deck", async () => {
+    expect((await cardService.getActiveCardsAsync()).length).toBe(0);
+  });
+  test("Date shift", async () => {
+    for (let i = 0; i < 3; i++) {
+      await cardService.createCardAsync(testCreateCardModel);
+    }
+    expect((await cardService.getActiveCardsAsync()).length).toBe(3);
+    for (let i = 0; i < 5; i++) {
+      const card = await cardService.createCardAsync(testCreateCardModel);
+      await cardService.learnCardAsync({
+        id: card.id,
+        difficult: "easy",
+      });
+    }
+    const card = await cardService.createCardAsync(testCreateCardModel);
+    for (let i = 0; i < 3; i++) {
+      await cardService.learnCardAsync({
+        id: card.id,
+        difficult: "easy",
+      });
+    }
+    // With first for
+    expect((await cardService.getActiveCardsAsync()).length).toBe(3);
+    // With second for
+    expect(
+      (
+        await cardService.getActiveCardsAsync(
+          addDays(new Date(), intervalFunction(1))
+        )
+      ).length
+    ).toBe(8);
+    // With card
+    expect(
+      (
+        await cardService.getActiveCardsAsync(
+          addDays(
+            new Date(),
+            intervalFunction(1) + intervalFunction(2) + intervalFunction(3)
+          )
+        )
+      ).length
+    ).toBe(9);
+  });
+});

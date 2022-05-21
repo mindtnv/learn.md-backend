@@ -1,4 +1,4 @@
-﻿import { Repository } from "typeorm";
+﻿import { LessThanOrEqual, Repository } from "typeorm";
 import { CardEntity } from "./CardEntity";
 import { addDays, clearTime } from "./utils";
 
@@ -89,5 +89,13 @@ export class CardService {
 
     await this.repository.remove(card);
     return card;
+  }
+
+  async getActiveCardsAsync(date: Date = new Date()): Promise<CardEntity[]> {
+    return await this.repository.find({
+      where: {
+        learnDate: LessThanOrEqual(date),
+      },
+    });
   }
 }
