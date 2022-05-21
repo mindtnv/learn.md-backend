@@ -13,6 +13,10 @@ export interface LearnCardModel {
   difficult: "easy" | "normal" | "hard";
 }
 
+export interface DeleteCardModel {
+  id: number;
+}
+
 export const cardFactory = (model: CreateCardModel) => {
   if (model.deck === "") throw new Error("deck can't be empty string");
   if (model.pasteId === "") throw new Error("pasteId can't be empty string");
@@ -73,6 +77,17 @@ export class CardService {
     card.interval = intervalFunction(card.stage);
     card.learnDate = clearTime(addDays(card.learnDate, card.interval));
     await this.repository.save(card);
+    return card;
+  }
+
+  async deleteCardAsync(model: DeleteCardModel): Promise<CardEntity> {
+    const card = await this.repository.findOne({
+      where: {
+        id: model.id,
+      },
+    });
+
+    await this.repository.remove(card);
     return card;
   }
 }

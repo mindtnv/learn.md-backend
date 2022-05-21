@@ -153,3 +153,14 @@ describe("LearnCard Tests", () => {
     expect(updatedCard.interval).toBe(intervalFunction(updatedCard.stage));
   });
 });
+
+describe("DeleteCard Tests", () => {
+  test("Count must be zero after deleting", async () => {
+    const card = await cardService.createCardAsync(testCreateCardModel);
+    expect(await cardService.repository.count()).toBe(1);
+    await cardService.deleteCardAsync({
+      id: card.id,
+    });
+    expect(await cardService.repository.count()).toBe(0);
+  });
+});
