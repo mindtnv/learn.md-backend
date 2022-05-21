@@ -1,0 +1,8 @@
+﻿{
+  "compilerOptions": {
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "lib": ["ES6"]
+  },
+  "files": ["./src/index.ts"]
+}
