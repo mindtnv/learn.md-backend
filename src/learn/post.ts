@@ -29,6 +29,8 @@ export const createLearnPostHandler = (
       const card = await cardService.getCard(
         Number.parseInt(request.params.id)
       );
+      if (card === null) return reply.code(404).send();
+
       return await cardService.learnCardAsync({
         id: card.id,
         difficult,
