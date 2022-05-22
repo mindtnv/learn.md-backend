@@ -6,7 +6,7 @@ import { addDays, clearTime, getRandomNumber } from "./utils";
 
 let AppDataSource: DataSource;
 let cardService: CardService;
-const testCreateCardModel: CreateCardModel = {
+export const testCreateCardModel: CreateCardModel = {
   pasteId: "test",
   pasteEditCode: "test",
   deck: "test",
