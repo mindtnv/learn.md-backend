@@ -29,8 +29,7 @@
   },
   "lint-staged": {
     "**/*.{js,jsx,ts,tsx}": [
-      "npx prettier -w .",
-      "npm test"
+      "npx prettier -w ."
     ]
   }
 }

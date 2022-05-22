@@ -1,4 +1,4 @@
-﻿import { addDays, clearTime } from "./utils";
+﻿import { addDays, clearTime, mod } from "./utils";
 
 describe("addDays Tests", () => {
   test("Add zero days", () => {
@@ -19,7 +19,7 @@ describe("addDays Tests", () => {
     const newDate = addDays(date, days);
     expect(newDate.getTime()).toBeLessThan(date.getTime());
     expect(newDate.getHours()).toBe(date.getHours());
-    expect(newDate.getDay() % 7).toBe((date.getDay() + days) % 7);
+    expect(newDate.getDay() % 7).toBe(mod(date.getDay() + days, 7));
   });
 });
 

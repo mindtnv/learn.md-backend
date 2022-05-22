@@ -10,7 +10,7 @@ export interface CreateCardModel {
 
 export interface LearnCardModel {
   id: number;
-  difficult: "easy" | "normal" | "hard";
+  difficult: string;
 }
 
 export interface DeleteCardModel {
@@ -97,5 +97,16 @@ export class CardService {
         learnDate: LessThanOrEqual(date),
       },
     });
+  }
+
+  async getCard(id: number): Promise<CardEntity | null> {
+    const notes = await this.repository.find({
+      where: {
+        id: id,
+      },
+      take: 1,
+    });
+
+    return notes.length > 0 ? notes[0] : null;
   }
 }

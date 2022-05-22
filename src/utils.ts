@@ -10,3 +10,5 @@ export const clearTime = (date: Date) => {
 
 export const getRandomNumber = (min: number, max: number) =>
   min + ~~(Math.random() * (max - min));
+
+export const mod = (x, y) => ((x % y) + y) % y;
