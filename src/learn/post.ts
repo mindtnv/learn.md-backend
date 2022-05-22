@@ -26,9 +26,10 @@ export const createLearnPostHandler = (
       if (!["easy", "normal", "hard"].some((x) => x === difficult))
         return reply.code(400).send();
 
-      const card = await cardService.getCard(
-        Number.parseInt(request.params.id)
-      );
+      const id = Number.parseInt(request.params.id);
+      if (isNaN(id)) return reply.code(404).send(404);
+
+      const card = await cardService.getCard(id);
       if (card === null) return reply.code(404).send();
 
       return await cardService.learnCardAsync({
