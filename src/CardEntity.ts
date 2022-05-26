@@ -18,4 +18,6 @@ export class CardEntity {
   pasteEditCode: string;
   @Column()
   deck: string;
+  @Column()
+  title: string;
 }

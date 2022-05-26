@@ -5,6 +5,7 @@ import { addDays, clearTime } from "./utils";
 export interface CreateCardModel {
   pasteId: string;
   pasteEditCode: string;
+  title: string;
   deck: string;
 }
 
@@ -31,6 +32,7 @@ export const cardFactory = (model: CreateCardModel) => {
   card.learnDate = clearTime(card.createDate);
   card.interval = 0;
   card.stage = 0;
+  card.title = model.title;
 
   return card;
 };

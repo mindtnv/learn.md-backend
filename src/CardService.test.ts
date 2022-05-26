@@ -10,6 +10,7 @@ export const testCreateCardModel: CreateCardModel = {
   pasteId: "test",
   pasteEditCode: "test",
   deck: "test",
+  title: "test",
 };
 
 beforeEach(async () => {
@@ -41,6 +42,7 @@ describe("CreateCard tests", () => {
         pasteId: "",
         deck: "",
         pasteEditCode: "",
+        title: "",
       });
     }).rejects.toThrow();
   });
