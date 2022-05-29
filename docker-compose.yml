@@ -1,0 +1,36 @@
+﻿version: "3.7"
+
+networks:
+  traefik-public:
+    external: true
+    
+volumes:
+  learnmd-backend:
+
+services:
+  learnmd-backend:
+    image: registry.dev.zldk.su/learnmd-backend
+    networks:
+      - traefik-public
+
+    volumes:
+      - learnmd-backend:/data
+
+    deploy:
+      restart_policy:
+        condition: on-failure
+      mode: replicated
+      replicas: 1
+      labels:
+        - traefik.enable=true
+        - traefik.docker.network=traefik-public
+        - traefik.http.routers.learnmd-backend.rule=Host(`api.learnmd.gbms.site`)
+        - traefik.http.routers.learnmd-backend-http.entrypoints=http
+        - traefik.http.routers.learnmd-backend-http.service=learnmd-backend
+        - traefik.http.routers.learnmd-backend-http.rule=Host(`api.learnmd.gbms.site`)
+        - traefik.http.routers.learnmd-backend-http.middlewares=https-redirect
+        - traefik.http.routers.learnmd-backend.entrypoints=https
+        - traefik.http.routers.learnmd-backend.tls=true
+        - traefik.http.routers.learnmd-backend.tls.certresolver=le
+        - traefik.http.services.learnmd-backend.loadbalancer.server.port=8000
+        - traefik.http.routers.learnmd-backend.service=learnmd-backend
